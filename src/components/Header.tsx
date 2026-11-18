@@ -11,7 +11,7 @@ const navLinks = [
   { label: 'FAQ', href: '#faq' },
 ];
 
-const whatsappLink = 'https://wa.me/10000000000';
+const whatsappLink = 'https://wa.me/212638841368?text=Hallo!%20Ich%20interessiere%20mich%20für%20Ihren%20IPTV%20Service.';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
