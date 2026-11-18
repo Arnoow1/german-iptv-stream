@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Check, Crown, Rocket, Star, Clock, Zap } from 'lucide-react';
-import { WhatsAppIcon, UsdtIcon } from '@/components/BrandIcons';
+import { WhatsAppIcon } from '@/components/BrandIcons';
 
 const plans = [
   {
     icon: Rocket,
     name: 'Starter',
     duration: '3 Monate',
-    price: 15,
-    original: 25,
+    price: 24.99,
+    original: 39.99,
     features: [
       '20.000+ Live-Kanäle',
       '50.000+ Filme & Serien',
@@ -23,8 +23,8 @@ const plans = [
     icon: Crown,
     name: 'Premium',
     duration: '12 Monate',
-    price: 39,
-    original: 70,
+    price: 59.99,
+    original: 99.99,
     features: [
       'Alles aus Starter',
       '2 Geräteverbindungen',
@@ -39,8 +39,8 @@ const plans = [
     icon: Star,
     name: 'Ultimate',
     duration: '24 Monate',
-    price: 59,
-    original: 120,
+    price: 99.99,
+    original: 179.99,
     features: [
       'Alles aus Premium',
       '3 Geräteverbindungen',
@@ -53,7 +53,7 @@ const plans = [
   },
 ];
 
-const whatsappLink = 'https://wa.me/10000000000';
+const whatsappNumber = '212638841368';
 
 export default function Pricing() {
   const [billing, setBilling] = useState<'monthly' | 'yearly'>('yearly');
@@ -89,100 +89,99 @@ export default function Pricing() {
             >
               Langfristig
               <span className="px-2 py-0.5 rounded-full text-xs bg-green-500/20 text-green-400 font-bold">
-                44% sparen
+                40% sparen
               </span>
             </button>
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {plans.map((plan, i) => (
-            <div
-              key={i}
-              className={`relative rounded-3xl p-8 border transition-all duration-300 hover:-translate-y-2 ${
-                plan.popular
-                  ? 'border-brand-500/50 bg-gradient-to-b from-brand-500/10 to-black glow-red lg:scale-105'
-                  : 'border-neutral-800 bg-gradient-to-b from-neutral-900/60 to-black/60 hover:border-brand-500/30'
-              }`}
-            >
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-brand-500 text-white text-xs font-bold uppercase tracking-wider glow-red flex items-center gap-1.5">
-                  <Zap className="w-3 h-3" />
-                  Beliebteste Wahl
-                </div>
-              )}
+          {plans.map((plan, i) => {
+            const message = encodeURIComponent(
+              `Hallo! Ich möchte das ${plan.name} Paket (${plan.duration} für €${plan.price}) bestellen.`
+            );
+            const dynamicWhatsappLink = `https://wa.me/${whatsappNumber}?text=${message}`;
 
-              <div className="flex items-center gap-3 mb-6">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                  plan.popular ? 'bg-brand-500' : 'bg-brand-500/10 border border-brand-500/20'
-                }`}>
-                  <plan.icon className={`w-6 h-6 ${plan.popular ? 'text-white' : 'text-brand-500'}`} />
+            return (
+              <div
+                key={i}
+                className={`relative rounded-3xl p-8 border transition-all duration-300 hover:-translate-y-2 ${
+                  plan.popular
+                    ? 'border-brand-500/50 bg-gradient-to-b from-brand-500/10 to-black glow-red lg:scale-105'
+                    : 'border-neutral-800 bg-gradient-to-b from-neutral-900/60 to-black/60 hover:border-brand-500/30'
+                }`}
+              >
+                {plan.popular && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-brand-500 text-white text-xs font-bold uppercase tracking-wider glow-red flex items-center gap-1.5">
+                    <Zap className="w-3 h-3" />
+                    Beliebteste Wahl
+                  </div>
+                )}
+
+                <div className="flex items-center gap-3 mb-6">
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                    plan.popular ? 'bg-brand-500' : 'bg-brand-500/10 border border-brand-500/20'
+                  }`}>
+                    <plan.icon className={`w-6 h-6 ${plan.popular ? 'text-white' : 'text-brand-500'}`} />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold">{plan.name}</h3>
+                    <span className="text-sm text-neutral-500 flex items-center gap-1">
+                      <Clock className="w-3 h-3" /> {plan.duration}
+                    </span>
+                  </div>
                 </div>
+
+                <div className="mb-6">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-5xl font-black">€{plan.price}</span>
+                    <span className="text-neutral-500 text-sm">einmalig</span>
+                  </div>
+                  <div className="flex items-center gap-2 mt-2">
+                    <span className="text-neutral-500 line-through text-sm">€{plan.original}</span>
+                    <span className="text-green-400 text-sm font-bold">
+                      €{(plan.original - plan.price).toFixed(2)} sparen
+                    </span>
+                  </div>
+                </div>
+
+                <ul className="space-y-3 mb-8">
+                  {plan.features.map((feature, fi) => (
+                    <li key={fi} className="flex items-start gap-3 text-sm">
+                      <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                        plan.popular ? 'bg-brand-500' : 'bg-brand-500/10 border border-brand-500/20'
+                      }`}>
+                        <Check className={`w-3 h-3 ${plan.popular ? 'text-white' : 'text-brand-500'}`} />
+                      </div>
+                      <span className="text-neutral-300">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
                 <div>
-                  <h3 className="text-xl font-bold">{plan.name}</h3>
-                  <span className="text-sm text-neutral-500 flex items-center gap-1">
-                    <Clock className="w-3 h-3" /> {plan.duration}
-                  </span>
+                  <a
+                    href={dynamicWhatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base transition-all duration-300 hover:scale-[1.02] ${
+                      plan.popular
+                        ? 'bg-green-600 hover:bg-green-500 text-white shadow-lg shadow-green-600/30'
+                        : 'border border-green-500/40 bg-green-500/10 hover:bg-green-500/20 text-green-400'
+                    }`}
+                  >
+                    <WhatsAppIcon className="w-5 h-5" />
+                    Per WhatsApp bestellen
+                  </a>
                 </div>
               </div>
-
-              <div className="mb-6">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-black">${plan.price}</span>
-                  <span className="text-neutral-500 text-sm">einmalig</span>
-                </div>
-                <div className="flex items-center gap-2 mt-2">
-                  <span className="text-neutral-500 line-through text-sm">${plan.original}</span>
-                  <span className="text-green-400 text-sm font-bold">
-                    ${plan.original - plan.price} sparen
-                  </span>
-                </div>
-              </div>
-
-              <ul className="space-y-3 mb-8">
-                {plan.features.map((feature, fi) => (
-                  <li key={fi} className="flex items-start gap-3 text-sm">
-                    <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                      plan.popular ? 'bg-brand-500' : 'bg-brand-500/10 border border-brand-500/20'
-                    }`}>
-                      <Check className={`w-3 h-3 ${plan.popular ? 'text-white' : 'text-brand-500'}`} />
-                    </div>
-                    <span className="text-neutral-300">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="space-y-3">
-                <a
-                  href="#"
-                  className={`flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-sm transition-all duration-300 hover:scale-[1.02] ${
-                    plan.popular
-                      ? 'bg-brand-500 hover:bg-brand-600 text-white glow-red'
-                      : 'bg-neutral-800 hover:bg-brand-500 text-white'
-                  }`}
-                >
-                  <UsdtIcon className="w-4 h-4" />
-                  Mit USDT bezahlen
-                </a>
-                <a
-                  href={whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-sm border border-green-500/40 bg-green-500/10 hover:bg-green-500/20 text-green-400 transition-all duration-300 hover:scale-[1.02]"
-                >
-                  <WhatsAppIcon className="w-4 h-4" />
-                  Per WhatsApp bestellen
-                </a>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-neutral-500">
           <span className="flex items-center gap-2"><Check className="w-4 h-4 text-brand-500" /> 7-Tage-Geld-zurück-Garantie</span>
           <span className="flex items-center gap-2"><Check className="w-4 h-4 text-brand-500" /> Sofortige Lieferung</span>
-          <span className="flex items-center gap-2"><Check className="w-4 h-4 text-brand-500" /> Sichere Zahlung</span>
-          <span className="flex items-center gap-2"><Check className="w-4 h-4 text-brand-500" /> Krypto akzeptiert</span>
+          <span className="flex items-center gap-2"><Check className="w-4 h-4 text-brand-500" /> Sichere WhatsApp Bestellung</span>
         </div>
       </div>
     </section>
