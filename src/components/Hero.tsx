@@ -49,7 +49,7 @@ export default function Hero() {
               <Play className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
             <a
-              href="https://wa.me/10000000000"
+              href="https://wa.me/212638841368?text=Hallo!%20Ich%20interessiere%20mich%20für%20Ihren%20IPTV%20Service."
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-4 rounded-xl border border-green-500/40 bg-green-500/10 hover:bg-green-500/20 text-green-400 font-bold text-base transition-all duration-300 hover:scale-105 flex items-center gap-2"
